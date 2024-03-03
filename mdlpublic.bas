@@ -47,22 +47,41 @@ Dim bit As Integer
 Dim attribstring As String
 'Dim currbit As Integer
 
-bit = 2 'Normal
-For x = 0 To 4 ' 5 steps from 2 to 32 bit
 
-    bit = bit * 2
-    quotient = attrib \ bit
-    modulus = attrib Mod bit
+Dim modulus As Integer
+modulus = 0
+
+If attrib > 0 Then
+
+Do
+    For x = 0 To 4
+        bit = 2 ^ x
+        If bit = 0 Then
+            quotient = 1
+        Else
+            quotient = attrib \ bit
+            modulus = attrib Mod bit
+        End If
+        
+        Debug.Print "Bit:" & bit & " Quotient:" & quotient & " Remainder:" & modulus
+        
+        If quotient = 1 Then
+            If attribstring <> "" Then
+                attribstring = attribstring & ", "
+            End If
+            attribstring = attribstring & getAttribText(bit)
+            Exit For
+        End If
+
+    Next x
     
-    Debug.Print "Bit:" & bit & " Quotient:" & quotient & " Remainder:" & modulus
-    
-    If quotient = 1 Then
-        attribstring = attribstring & getAttribText(bit)
-        'get the remaining bit
-        'bit = quotient - modulus
-    End If
-    
-Next x
+    'subtract attrib in remainder
+    attrib = attrib - bit
+Loop While modulus > 0
+    Debug.Print "New Attrib:" & attrib
+End If
+
+
 'return attrib
 getAttribValue = attribstring
 

@@ -97,8 +97,8 @@ For x = 0 To UBound(attribs)
     If attribs(x, 0) = foldername Then
         'Print ("Attribute:" & attribs(x, 1))
         txtProperties.Text = txtProperties.Text & "Folder Name: " & attribs(x, 0) & vbCrLf
-        txtProperties.Text = txtProperties.Text & "Attribute: " & attribs(x, 1) & vbCrLf
-        'txtProperties.Text = txtProperties.Text & "Attribute: " & mdlpublic.getAttribValue(Val(attribs(X, 1))) & vbCrLf
+        'txtProperties.Text = txtProperties.Text & "Attribute: " & attribs(x, 1) & vbCrLf
+        txtProperties.Text = txtProperties.Text & "Attribute: " & mdlpublic.getAttribValue(Val(attribs(x, 1))) & vbCrLf
         txtProperties.Text = txtProperties.Text & "Size: " & attribs(x, 2) & " bytes" & vbCrLf
     End If
 Next x
