@@ -1,8 +1,8 @@
 VERSION 5.00
 Begin VB.Form Form1 
    BorderStyle     =   1  'Fixed Single
-   Caption         =   "attrb.exe by Meij"
-   ClientHeight    =   1905
+   Caption         =   "attrb 2"
+   ClientHeight    =   2085
    ClientLeft      =   8040
    ClientTop       =   3120
    ClientWidth     =   5775
@@ -10,14 +10,26 @@ Begin VB.Form Form1
    LinkTopic       =   "Form1"
    MaxButton       =   0   'False
    MinButton       =   0   'False
-   ScaleHeight     =   1905
+   ScaleHeight     =   2085
    ScaleWidth      =   5775
    Visible         =   0   'False
+   Begin VB.TextBox txtLabel 
+      BackColor       =   &H8000000F&
+      BorderStyle     =   0  'None
+      Height          =   495
+      Left            =   120
+      Locked          =   -1  'True
+      MultiLine       =   -1  'True
+      TabIndex        =   6
+      Text            =   "Form1.frx":030A
+      Top             =   1200
+      Width           =   5535
+   End
    Begin VB.CommandButton cmdlist 
       Caption         =   "Ls>"
       Height          =   375
       Left            =   5040
-      TabIndex        =   6
+      TabIndex        =   5
       Top             =   240
       Width           =   615
    End
@@ -28,11 +40,11 @@ Begin VB.Form Form1
    End
    Begin VB.ComboBox cmbattr 
       Height          =   315
-      ItemData        =   "Form1.frx":030A
+      ItemData        =   "Form1.frx":0381
       Left            =   1680
-      List            =   "Form1.frx":0320
+      List            =   "Form1.frx":0397
       Style           =   2  'Dropdown List
-      TabIndex        =   5
+      TabIndex        =   4
       Top             =   720
       Width           =   1455
    End
@@ -57,24 +69,16 @@ Begin VB.Form Form1
       Height          =   360
       Left            =   1680
       TabIndex        =   1
-      Top             =   255
+      Top             =   240
       Width           =   1455
    End
    Begin VB.Label Label3 
       Caption         =   "Attribute"
       Height          =   255
       Left            =   240
-      TabIndex        =   4
+      TabIndex        =   3
       Top             =   840
       Width           =   1335
-   End
-   Begin VB.Label Label2 
-      Caption         =   "*Copy this app to desire directory where folder is seems to be exists"
-      Height          =   255
-      Left            =   120
-      TabIndex        =   3
-      Top             =   1320
-      Width           =   4935
    End
    Begin VB.Label Label1 
       Caption         =   "Enter Folder Name:"
@@ -92,6 +96,8 @@ Attribute VB_PredeclaredId = True
 Attribute VB_Exposed = False
 Option Explicit
 
+'Public f_attrib() As String
+
 Private Sub cmdlist_Click()
 Dim fso As New FileSystemObject
 Dim fld As Folder
@@ -102,15 +108,47 @@ On Error GoTo errpage
 Set fld = fso.GetFolder(App.Path)
 Debug.Print App.Path
 
-dlglistsub.Show
-dlglistsub.Top = Form1.Top + Form1.Height
-dlglistsub.Left = Form1.Left
-dlglistsub.Text1.Text = ""
+If dlglistsub.Visible = False Then
+    dlglistsub.Show
+Else
+    Unload dlglistsub
+End If
 
 
+'dlglistsub.Top = Form1.Top + Form1.Height
+'dlglistsub.Left = Form1.Left
+'dlglistsub.Text1.Text = ""
+mdlpublic.followmainwindow
+dlglistsub.lstitems.Clear
+Erase mdlpublic.f_attrib
+
+'Create array to hold the attributes
+
+Dim i As Integer
+'Dim f_attrib() As String
+
+'count subfolders
+Dim foldercount As Integer
+foldercount = fld.SubFolders.Count
+ReDim f_attrib(foldercount, 1)
+
+i = 0
 For Each subfoldr In fld.SubFolders
-    Debug.Print subfoldr.Name & "-" & subfoldr.Attributes
-    dlglistsub.Text1.Text = dlglistsub.Text1.Text & subfoldr.Name & " - " & subfoldr.Attributes & vbCrLf
+    Debug.Print ("Redim Array" & i + 1)
+    'ReDim Preserve f_attrib(i, 1)
+    'Debug.Print subfoldr.Name & "-" & subfoldr.Attributes
+    Debug.Print "Array:" & i + 1 & "," & 1 & "=" & subfoldr.Name
+    
+    'dlglistsub.Text1.Text = dlglistsub.Text1.Text & subfoldr.Name & " - " & subfoldr.Attributes & vbCrLf
+    dlglistsub.lstitems.AddItem (subfoldr.Name)
+    
+    
+    '0= folder name
+    '1=Attribute
+    mdlpublic.f_attrib(i, 0) = subfoldr.Name
+    mdlpublic.f_attrib(i, 1) = subfoldr.Attributes
+    
+    i = i + 1
 Next
 
 Exit Sub
@@ -152,6 +190,7 @@ Else
 errpage:
     MsgBox Err.Description, vbCritical, "ERROR!"
 End Sub
+
 
 Private Sub Form_Load()
 cmbattr.Text = "Default"

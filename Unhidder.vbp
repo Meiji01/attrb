@@ -1,6 +1,6 @@
 Type=Exe
-Reference=*\G{00020430-0000-0000-C000-000000000046}#2.0#0#..\..\..\..\..\WINDOWS\system32\stdole2.tlb#OLE Automation
-Reference=*\G{420B2830-E718-11CF-893D-00A0C9054228}#1.0#0#..\..\..\..\..\WINDOWS\system32\scrrun.dll#Microsoft Scripting Runtime
+Reference=*\G{00020430-0000-0000-C000-000000000046}#2.0#0#C:\WINDOWS\system32\stdole2.tlb#OLE Automation
+Reference=*\G{420B2830-E718-11CF-893D-00A0C9054228}#1.0#0#C:\WINDOWS\system32\scrrun.dll#Microsoft Scripting Runtime
 Form=Form1.frm
 Module=mdlpublic; mdlpublic.bas
 Form=dlglistsub.frm
@@ -9,13 +9,14 @@ Startup="Form1"
 HelpFile=""
 Title="Unhidder"
 ExeName32="attrb.exe"
+Path32="C:\WorkingFolder"
 Command32=""
 Name="Project1"
 HelpContextID="0"
 CompatibleMode="0"
-MajorVer=1
+MajorVer=2
 MinorVer=0
-RevisionVer=7
+RevisionVer=1
 AutoIncrementVer=0
 ServerSupportFiles=0
 VersionComments="This is an app for IT technicians"
@@ -35,6 +36,7 @@ Unattended=0
 Retained=0
 ThreadPerObject=0
 MaxNumberOfThreads=1
+DebugStartupOption=0
 
 [MS Transaction Server]
 AutoRefresh=1
