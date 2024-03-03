@@ -1,6 +1,9 @@
 # What is ATTRB
 Attrb is an application to manipulate windows folder attribute. This is very helpful on changing attributes.
-Initially created to fix folder attributes unecessary changes due to malware
+Created to fix folder attributes unintentional changes
+
+# Snapshot
+![Screenshot](screenshot.png)
 
 # Features
 Attrb features the following functionalities
