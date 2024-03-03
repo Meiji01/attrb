@@ -199,6 +199,11 @@ errpage:
 End Sub
 
 
+Private Sub Form_Click()
+'Temporary only
+Debug.Print getAttribValue(17)
+End Sub
+
 Private Sub Form_Load()
 cmbattr.Text = "Default"
 cmdunhide.Enabled = False

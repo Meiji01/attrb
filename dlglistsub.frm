@@ -21,7 +21,7 @@ Begin VB.Form dlglistsub
       Top             =   120
       Width           =   2295
       Begin VB.TextBox txtProperties 
-         BackColor       =   &H8000000C&
+         BackColor       =   &H8000000F&
          BorderStyle     =   0  'None
          Height          =   1335
          Left            =   120
@@ -41,7 +41,7 @@ Begin VB.Form dlglistsub
       Width           =   3015
    End
    Begin VB.CommandButton OKButton 
-      Caption         =   "OK"
+      Caption         =   "&Close"
       Height          =   495
       Left            =   240
       TabIndex        =   0
@@ -90,17 +90,18 @@ End Sub
 Private Sub findfolder(foldername As String, attribs() As String)
 
 Dim o_attributes As String
-Dim X
+Dim x
 
-For X = 0 To UBound(attribs)
+For x = 0 To UBound(attribs)
     Debug.Print "findfolder:" & foldername
-    If attribs(X, 0) = foldername Then
+    If attribs(x, 0) = foldername Then
         'Print ("Attribute:" & attribs(x, 1))
-        txtProperties.Text = txtProperties.Text & "Folder Name: " & attribs(X, 0) & vbCrLf
-        txtProperties.Text = txtProperties.Text & "Attribute: " & attribs(X, 1) & vbCrLf
-        txtProperties.Text = txtProperties.Text & "Size: " & attribs(X, 2) & " bytes" & vbCrLf
+        txtProperties.Text = txtProperties.Text & "Folder Name: " & attribs(x, 0) & vbCrLf
+        txtProperties.Text = txtProperties.Text & "Attribute: " & attribs(x, 1) & vbCrLf
+        'txtProperties.Text = txtProperties.Text & "Attribute: " & mdlpublic.getAttribValue(Val(attribs(X, 1))) & vbCrLf
+        txtProperties.Text = txtProperties.Text & "Size: " & attribs(x, 2) & " bytes" & vbCrLf
     End If
-Next X
+Next x
 
 End Sub
 

@@ -40,3 +40,65 @@ Set fso = New FileSystemObject
 getFolderSize = fso.GetFolder(folderpath).Size
 End Function
 
+Public Function getAttribValue(attrib As Integer) As String
+
+Dim x As Integer
+Dim bit As Integer
+Dim attribstring As String
+'Dim currbit As Integer
+
+bit = 2 'Normal
+For x = 0 To 4 ' 5 steps from 2 to 32 bit
+
+    bit = bit * 2
+    quotient = attrib \ bit
+    modulus = attrib Mod bit
+    
+    Debug.Print "Bit:" & bit & " Quotient:" & quotient & " Remainder:" & modulus
+    
+    If quotient = 1 Then
+        attribstring = attribstring & getAttribText(bit)
+        'get the remaining bit
+        'bit = quotient - modulus
+    End If
+    
+Next x
+'return attrib
+getAttribValue = attribstring
+
+End Function
+
+Private Function getAttribText(attrib As Integer) As String
+
+Const normal = 0
+Const readOnly = 1
+Const hidden = 2
+Const system = 4
+Const directory = 16
+Const archive = 32
+Dim attribvalue As String
+
+
+
+Select Case attrib
+Case normal
+attribvalue = "Default"
+Case readOnly
+attribvalue = "Read-Only"
+Case hidden
+attribvalue = "Hidden"
+Case system
+attribvalue = "System"
+Case directory
+attribvalue = "Directory"
+Case archive
+attribvalue = "Archive"
+Case Else
+attribvalue = "Unknown"
+End Select
+
+'return the attribvalue
+getAttribText = attribvalue
+
+End Function
+
