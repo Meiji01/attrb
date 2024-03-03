@@ -94,6 +94,18 @@ Attribute VB_GlobalNameSpace = False
 Attribute VB_Creatable = False
 Attribute VB_PredeclaredId = True
 Attribute VB_Exposed = False
+'Licensed under the Apache License, Version 2.0 (the "License");
+'you may not use this file except in compliance with the License.
+'You may obtain a copy of the License at
+
+'    http://www.apache.org/licenses/LICENSE-2.0
+
+'Unless required by applicable law or agreed to in writing, software
+'distributed under the License is distributed on an "AS IS" BASIS,
+'WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+'See the License for the specific language governing permissions and
+'limitations under the License.
+
 Option Explicit
 
 'Public f_attrib() As String
@@ -115,9 +127,6 @@ Else
 End If
 
 
-'dlglistsub.Top = Form1.Top + Form1.Height
-'dlglistsub.Left = Form1.Left
-'dlglistsub.Text1.Text = ""
 mdlpublic.followmainwindow
 dlglistsub.lstitems.Clear
 Erase mdlpublic.f_attrib
@@ -130,23 +139,21 @@ Dim i As Integer
 'count subfolders
 Dim foldercount As Integer
 foldercount = fld.SubFolders.Count
-ReDim f_attrib(foldercount, 1)
+ReDim f_attrib(foldercount, 2)
 
 i = 0
 For Each subfoldr In fld.SubFolders
     Debug.Print ("Redim Array" & i + 1)
-    'ReDim Preserve f_attrib(i, 1)
-    'Debug.Print subfoldr.Name & "-" & subfoldr.Attributes
     Debug.Print "Array:" & i + 1 & "," & 1 & "=" & subfoldr.Name
     
-    'dlglistsub.Text1.Text = dlglistsub.Text1.Text & subfoldr.Name & " - " & subfoldr.Attributes & vbCrLf
-    dlglistsub.lstitems.AddItem (subfoldr.Name)
+    dlglistsub.lstitems.AddItem (subfoldr.Name) 'Add folder name in the listbox
     
     
     '0= folder name
     '1=Attribute
     mdlpublic.f_attrib(i, 0) = subfoldr.Name
     mdlpublic.f_attrib(i, 1) = subfoldr.Attributes
+    mdlpublic.f_attrib(i, 2) = mdlpublic.getFolderSize(subfoldr.Path)
     
     i = i + 1
 Next

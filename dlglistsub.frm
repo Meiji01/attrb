@@ -2,7 +2,7 @@ VERSION 5.00
 Begin VB.Form dlglistsub 
    BorderStyle     =   3  'Fixed Dialog
    Caption         =   "Folder List"
-   ClientHeight    =   2115
+   ClientHeight    =   2265
    ClientLeft      =   8040
    ClientTop       =   5805
    ClientWidth     =   5775
@@ -10,7 +10,7 @@ Begin VB.Form dlglistsub
    LinkTopic       =   "Form1"
    MaxButton       =   0   'False
    MinButton       =   0   'False
-   ScaleHeight     =   2115
+   ScaleHeight     =   2265
    ScaleWidth      =   5775
    ShowInTaskbar   =   0   'False
    Begin VB.Frame frameProperties 
@@ -54,6 +54,18 @@ Attribute VB_GlobalNameSpace = False
 Attribute VB_Creatable = False
 Attribute VB_PredeclaredId = True
 Attribute VB_Exposed = False
+'Licensed under the Apache License, Version 2.0 (the "License");
+'you may not use this file except in compliance with the License.
+'You may obtain a copy of the License at
+
+'    http://www.apache.org/licenses/LICENSE-2.0
+
+'Unless required by applicable law or agreed to in writing, software
+'distributed under the License is distributed on an "AS IS" BASIS,
+'WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+'See the License for the specific language governing permissions and
+'limitations under the License.
+
 
 Option Explicit
 
@@ -84,8 +96,9 @@ For X = 0 To UBound(attribs)
     Debug.Print "findfolder:" & foldername
     If attribs(X, 0) = foldername Then
         'Print ("Attribute:" & attribs(x, 1))
-        txtProperties.Text = txtProperties.Text & "Folder Name:" & attribs(X, 0) & vbCrLf
-        txtProperties.Text = txtProperties.Text & "Attribute:" & attribs(X, 1) & vbCrLf
+        txtProperties.Text = txtProperties.Text & "Folder Name: " & attribs(X, 0) & vbCrLf
+        txtProperties.Text = txtProperties.Text & "Attribute: " & attribs(X, 1) & vbCrLf
+        txtProperties.Text = txtProperties.Text & "Size: " & attribs(X, 2) & " bytes" & vbCrLf
     End If
 Next X
 
