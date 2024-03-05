@@ -20,6 +20,7 @@ Public ypos As Integer
 '1=Attribute
 '2=Folder Size
 Public f_attrib() As String
+Public file_attrib() As String
 
 Sub initpublic()
 ysize = 0

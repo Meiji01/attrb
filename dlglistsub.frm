@@ -1,7 +1,7 @@
 VERSION 5.00
 Begin VB.Form dlglistsub 
    BorderStyle     =   3  'Fixed Dialog
-   Caption         =   "Folder List"
+   Caption         =   "Files and Folders"
    ClientHeight    =   2265
    ClientLeft      =   8040
    ClientTop       =   5805

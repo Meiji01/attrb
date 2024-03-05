@@ -141,6 +141,7 @@ Dim foldercount As Integer
 foldercount = fld.SubFolders.Count
 ReDim f_attrib(foldercount, 2)
 
+'Iterate folders
 i = 0
 For Each subfoldr In fld.SubFolders
     Debug.Print ("Redim Array" & i + 1)
@@ -156,6 +157,22 @@ For Each subfoldr In fld.SubFolders
     mdlpublic.f_attrib(i, 2) = mdlpublic.getFolderSize(subfoldr.Path)
     
     i = i + 1
+Next
+
+'Iterate Files
+Dim filecount As Integer
+filecount = fld.Files.Count
+ReDim mdlpublic.file_attrib(filecount, 2) ' create placeholder for the file attributes
+
+
+Dim file As Object
+Dim j As Integer
+j = 0
+For Each file In fld.Files
+    dlglistsub.lstitems.AddItem (file.Name)
+    mdlpublic.file_attrib(j, 0) = file.Name
+    mdlpublic.file_attrib(j, 1) = file.Attributes
+    j = j + 1
 Next
 
 Exit Sub
