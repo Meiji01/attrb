@@ -41,7 +41,7 @@ Begin VB.Form Form1
    Begin VB.ComboBox cmbattr 
       Height          =   315
       ItemData        =   "Form1.frx":0381
-      Left            =   1680
+      Left            =   2040
       List            =   "Form1.frx":0397
       Style           =   2  'Dropdown List
       TabIndex        =   4
@@ -51,10 +51,10 @@ Begin VB.Form Form1
    Begin VB.CommandButton cmdunhide 
       Caption         =   "&Change Attribute"
       Height          =   375
-      Left            =   3360
+      Left            =   3600
       TabIndex        =   2
       Top             =   240
-      Width           =   1575
+      Width           =   1335
    End
    Begin VB.TextBox txtfoldername 
       BeginProperty Font 
@@ -67,13 +67,13 @@ Begin VB.Form Form1
          Strikethrough   =   0   'False
       EndProperty
       Height          =   360
-      Left            =   1680
+      Left            =   2040
       TabIndex        =   1
       Top             =   240
       Width           =   1455
    End
    Begin VB.Label Label3 
-      Caption         =   "Attribute"
+      Caption         =   "New Attribute"
       Height          =   255
       Left            =   240
       TabIndex        =   3
@@ -81,12 +81,12 @@ Begin VB.Form Form1
       Width           =   1335
    End
    Begin VB.Label Label1 
-      Caption         =   "Enter Folder Name:"
+      Caption         =   "Enter File/Folder Name:"
       Height          =   255
       Left            =   240
       TabIndex        =   0
       Top             =   360
-      Width           =   1455
+      Width           =   1695
    End
 End
 Attribute VB_Name = "Form1"
