@@ -55,7 +55,7 @@ modulus = 0
 If attrib > 0 Then
 
 Do
-    For x = 0 To 4
+    For x = 0 To 5
         bit = 2 ^ x
         If bit = 0 Then
             quotient = 1

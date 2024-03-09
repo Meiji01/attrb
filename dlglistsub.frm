@@ -35,9 +35,9 @@ Begin VB.Form dlglistsub
    End
    Begin VB.ListBox lstitems 
       Height          =   1230
-      Left            =   240
+      Left            =   360
       TabIndex        =   1
-      Top             =   240
+      Top             =   360
       Width           =   3015
    End
    Begin VB.CommandButton OKButton 
@@ -80,6 +80,7 @@ Private Sub lstitems_Click()
 txtProperties.Text = ""
 Debug.Print "Selected Item is"; lstitems.Text
 findfolder lstitems.Text, mdlpublic.f_attrib
+findfolder lstitems.Text, mdlpublic.file_attrib
 Form1.txtfoldername.Text = lstitems.Text
 End Sub
 
@@ -96,7 +97,8 @@ For x = 0 To UBound(attribs)
     Debug.Print "findfolder:" & foldername
     If attribs(x, 0) = foldername Then
         'Print ("Attribute:" & attribs(x, 1))
-        txtProperties.Text = txtProperties.Text & "Folder Name: " & attribs(x, 0) & vbCrLf
+        txtProperties.Text = txtProperties.Text & "Name: " & attribs(x, 0) & vbCrLf
+        txtProperties.Text = txtProperties.Text & "Type: " & attribs(x, 3) & vbCrLf
         'txtProperties.Text = txtProperties.Text & "Attribute: " & attribs(x, 1) & vbCrLf
         txtProperties.Text = txtProperties.Text & "Attribute: " & mdlpublic.getAttribValue(Val(attribs(x, 1))) & vbCrLf
         txtProperties.Text = txtProperties.Text & "Size: " & attribs(x, 2) & " bytes" & vbCrLf

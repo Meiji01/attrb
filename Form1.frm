@@ -49,7 +49,7 @@ Begin VB.Form Form1
       Width           =   1455
    End
    Begin VB.CommandButton cmdunhide 
-      Caption         =   "&Execute"
+      Caption         =   "&Change Attribute"
       Height          =   375
       Left            =   3360
       TabIndex        =   2
@@ -139,7 +139,7 @@ Dim i As Integer
 'count subfolders
 Dim foldercount As Integer
 foldercount = fld.SubFolders.Count
-ReDim f_attrib(foldercount, 2)
+ReDim f_attrib(foldercount, 3)
 
 'Iterate folders
 i = 0
@@ -155,14 +155,14 @@ For Each subfoldr In fld.SubFolders
     mdlpublic.f_attrib(i, 0) = subfoldr.Name
     mdlpublic.f_attrib(i, 1) = subfoldr.Attributes
     mdlpublic.f_attrib(i, 2) = mdlpublic.getFolderSize(subfoldr.Path)
-    
+    mdlpublic.f_attrib(i, 3) = "Folder"
     i = i + 1
 Next
 
 'Iterate Files
 Dim filecount As Integer
 filecount = fld.Files.Count
-ReDim mdlpublic.file_attrib(filecount, 2) ' create placeholder for the file attributes
+ReDim mdlpublic.file_attrib(filecount, 3) ' create placeholder for the file attributes
 
 
 Dim file As Object
@@ -172,6 +172,8 @@ For Each file In fld.Files
     dlglistsub.lstitems.AddItem (file.Name)
     mdlpublic.file_attrib(j, 0) = file.Name
     mdlpublic.file_attrib(j, 1) = file.Attributes
+    mdlpublic.file_attrib(j, 2) = file.Size
+    mdlpublic.file_attrib(j, 3) = "File"
     j = j + 1
 Next
 
