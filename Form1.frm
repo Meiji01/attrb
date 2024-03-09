@@ -22,7 +22,7 @@ Begin VB.Form Form1
       MultiLine       =   -1  'True
       TabIndex        =   6
       Text            =   "Form1.frx":030A
-      Top             =   1200
+      Top             =   1320
       Width           =   5535
    End
    Begin VB.CommandButton cmdlist 
@@ -71,6 +71,14 @@ Begin VB.Form Form1
       TabIndex        =   1
       Top             =   240
       Width           =   1455
+   End
+   Begin VB.Label lblVersion 
+      Caption         =   "v x.x"
+      Height          =   255
+      Left            =   5160
+      TabIndex        =   7
+      Top             =   1800
+      Width           =   615
    End
    Begin VB.Label Label3 
       Caption         =   "New Attribute"
@@ -224,6 +232,9 @@ Private Sub Form_Click()
 End Sub
 
 Private Sub Form_Load()
+
+lblVersion.Caption = "v. " & App.Major & "." & App.Minor & "." & App.Revision
+
 cmbattr.Text = "Default"
 cmdunhide.Enabled = False
 
@@ -237,10 +248,12 @@ Private Sub Form_Unload(Cancel As Integer)
 End
 End Sub
 
+
+
 Private Sub tmanim_Timer()
 
 Form1.Visible = True
-tmanim.Interval = 40
+tmanim.Interval = 100
 
 mdlpublic.ysize = mdlpublic.ysize + 300
 Form1.Height = mdlpublic.ysize
@@ -249,7 +262,7 @@ mdlpublic.ypos = mdlpublic.ypos + 200
 Form1.Top = mdlpublic.ypos
 
 
-If Form1.Height >= 2385 Or Form1.Top >= 3000 Then
+If Form1.Height >= 2565 Or Form1.Top >= 3000 Then
     tmanim.Enabled = False
 End If
 
