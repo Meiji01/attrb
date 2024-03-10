@@ -1,8 +1,8 @@
 VERSION 5.00
 Begin VB.Form dlglistsub 
    BorderStyle     =   3  'Fixed Dialog
-   Caption         =   "Folder List"
-   ClientHeight    =   2115
+   Caption         =   "Files and Folders"
+   ClientHeight    =   3465
    ClientLeft      =   8040
    ClientTop       =   5805
    ClientWidth     =   5775
@@ -10,20 +10,20 @@ Begin VB.Form dlglistsub
    LinkTopic       =   "Form1"
    MaxButton       =   0   'False
    MinButton       =   0   'False
-   ScaleHeight     =   2115
+   ScaleHeight     =   3465
    ScaleWidth      =   5775
    ShowInTaskbar   =   0   'False
    Begin VB.Frame frameProperties 
       Caption         =   "Properties"
-      Height          =   1935
+      Height          =   3135
       Left            =   3360
       TabIndex        =   2
       Top             =   120
       Width           =   2295
       Begin VB.TextBox txtProperties 
-         BackColor       =   &H8000000C&
+         BackColor       =   &H8000000F&
          BorderStyle     =   0  'None
-         Height          =   1335
+         Height          =   2655
          Left            =   120
          Locked          =   -1  'True
          MultiLine       =   -1  'True
@@ -34,18 +34,18 @@ Begin VB.Form dlglistsub
       End
    End
    Begin VB.ListBox lstitems 
-      Height          =   1230
+      Height          =   2205
       Left            =   240
       TabIndex        =   1
       Top             =   240
       Width           =   3015
    End
    Begin VB.CommandButton OKButton 
-      Caption         =   "OK"
+      Caption         =   "&Close"
       Height          =   495
       Left            =   240
       TabIndex        =   0
-      Top             =   1560
+      Top             =   2760
       Width           =   3015
    End
 End
@@ -54,6 +54,18 @@ Attribute VB_GlobalNameSpace = False
 Attribute VB_Creatable = False
 Attribute VB_PredeclaredId = True
 Attribute VB_Exposed = False
+'Licensed under the Apache License, Version 2.0 (the "License");
+'you may not use this file except in compliance with the License.
+'You may obtain a copy of the License at
+
+'    http://www.apache.org/licenses/LICENSE-2.0
+
+'Unless required by applicable law or agreed to in writing, software
+'distributed under the License is distributed on an "AS IS" BASIS,
+'WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+'See the License for the specific language governing permissions and
+'limitations under the License.
+
 
 Option Explicit
 
@@ -68,6 +80,7 @@ Private Sub lstitems_Click()
 txtProperties.Text = ""
 Debug.Print "Selected Item is"; lstitems.Text
 findfolder lstitems.Text, mdlpublic.f_attrib
+findfolder lstitems.Text, mdlpublic.file_attrib
 Form1.txtfoldername.Text = lstitems.Text
 End Sub
 
@@ -78,16 +91,19 @@ End Sub
 Private Sub findfolder(foldername As String, attribs() As String)
 
 Dim o_attributes As String
-Dim X
+Dim x
 
-For X = 0 To UBound(attribs)
+For x = 0 To UBound(attribs)
     Debug.Print "findfolder:" & foldername
-    If attribs(X, 0) = foldername Then
+    If attribs(x, 0) = foldername Then
         'Print ("Attribute:" & attribs(x, 1))
-        txtProperties.Text = txtProperties.Text & "Folder Name:" & attribs(X, 0) & vbCrLf
-        txtProperties.Text = txtProperties.Text & "Attribute:" & attribs(X, 1) & vbCrLf
+        txtProperties.Text = txtProperties.Text & "Name: " & attribs(x, 0) & vbCrLf
+        txtProperties.Text = txtProperties.Text & "Type: " & attribs(x, 3) & vbCrLf
+        'txtProperties.Text = txtProperties.Text & "Attribute: " & attribs(x, 1) & vbCrLf
+        txtProperties.Text = txtProperties.Text & "Attribute: " & mdlpublic.getAttribValue(Val(attribs(x, 1))) & vbCrLf
+        txtProperties.Text = txtProperties.Text & "Size: " & attribs(x, 2) & " bytes" & vbCrLf
     End If
-Next X
+Next x
 
 End Sub
 

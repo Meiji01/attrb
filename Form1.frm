@@ -22,7 +22,7 @@ Begin VB.Form Form1
       MultiLine       =   -1  'True
       TabIndex        =   6
       Text            =   "Form1.frx":030A
-      Top             =   1200
+      Top             =   1320
       Width           =   5535
    End
    Begin VB.CommandButton cmdlist 
@@ -41,7 +41,7 @@ Begin VB.Form Form1
    Begin VB.ComboBox cmbattr 
       Height          =   315
       ItemData        =   "Form1.frx":0381
-      Left            =   1680
+      Left            =   2040
       List            =   "Form1.frx":0397
       Style           =   2  'Dropdown List
       TabIndex        =   4
@@ -49,12 +49,12 @@ Begin VB.Form Form1
       Width           =   1455
    End
    Begin VB.CommandButton cmdunhide 
-      Caption         =   "&Execute"
+      Caption         =   "&Change Attribute"
       Height          =   375
-      Left            =   3360
+      Left            =   3600
       TabIndex        =   2
       Top             =   240
-      Width           =   1575
+      Width           =   1335
    End
    Begin VB.TextBox txtfoldername 
       BeginProperty Font 
@@ -67,13 +67,21 @@ Begin VB.Form Form1
          Strikethrough   =   0   'False
       EndProperty
       Height          =   360
-      Left            =   1680
+      Left            =   2040
       TabIndex        =   1
       Top             =   240
       Width           =   1455
    End
+   Begin VB.Label lblVersion 
+      Caption         =   "v x.x"
+      Height          =   255
+      Left            =   5160
+      TabIndex        =   7
+      Top             =   1800
+      Width           =   615
+   End
    Begin VB.Label Label3 
-      Caption         =   "Attribute"
+      Caption         =   "New Attribute"
       Height          =   255
       Left            =   240
       TabIndex        =   3
@@ -81,12 +89,12 @@ Begin VB.Form Form1
       Width           =   1335
    End
    Begin VB.Label Label1 
-      Caption         =   "Enter Folder Name:"
+      Caption         =   "Enter File/Folder Name:"
       Height          =   255
       Left            =   240
       TabIndex        =   0
       Top             =   360
-      Width           =   1455
+      Width           =   1695
    End
 End
 Attribute VB_Name = "Form1"
@@ -94,6 +102,18 @@ Attribute VB_GlobalNameSpace = False
 Attribute VB_Creatable = False
 Attribute VB_PredeclaredId = True
 Attribute VB_Exposed = False
+'Licensed under the Apache License, Version 2.0 (the "License");
+'you may not use this file except in compliance with the License.
+'You may obtain a copy of the License at
+
+'    http://www.apache.org/licenses/LICENSE-2.0
+
+'Unless required by applicable law or agreed to in writing, software
+'distributed under the License is distributed on an "AS IS" BASIS,
+'WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+'See the License for the specific language governing permissions and
+'limitations under the License.
+
 Option Explicit
 
 'Public f_attrib() As String
@@ -115,9 +135,6 @@ Else
 End If
 
 
-'dlglistsub.Top = Form1.Top + Form1.Height
-'dlglistsub.Left = Form1.Left
-'dlglistsub.Text1.Text = ""
 mdlpublic.followmainwindow
 dlglistsub.lstitems.Clear
 Erase mdlpublic.f_attrib
@@ -130,25 +147,42 @@ Dim i As Integer
 'count subfolders
 Dim foldercount As Integer
 foldercount = fld.SubFolders.Count
-ReDim f_attrib(foldercount, 1)
+ReDim f_attrib(foldercount, 3)
 
+'Iterate folders
 i = 0
 For Each subfoldr In fld.SubFolders
     Debug.Print ("Redim Array" & i + 1)
-    'ReDim Preserve f_attrib(i, 1)
-    'Debug.Print subfoldr.Name & "-" & subfoldr.Attributes
     Debug.Print "Array:" & i + 1 & "," & 1 & "=" & subfoldr.Name
     
-    'dlglistsub.Text1.Text = dlglistsub.Text1.Text & subfoldr.Name & " - " & subfoldr.Attributes & vbCrLf
-    dlglistsub.lstitems.AddItem (subfoldr.Name)
+    dlglistsub.lstitems.AddItem (subfoldr.Name) 'Add folder name in the listbox
     
     
     '0= folder name
     '1=Attribute
     mdlpublic.f_attrib(i, 0) = subfoldr.Name
     mdlpublic.f_attrib(i, 1) = subfoldr.Attributes
-    
+    mdlpublic.f_attrib(i, 2) = mdlpublic.getFolderSize(subfoldr.Path)
+    mdlpublic.f_attrib(i, 3) = "Folder"
     i = i + 1
+Next
+
+'Iterate Files
+Dim filecount As Integer
+filecount = fld.Files.Count
+ReDim mdlpublic.file_attrib(filecount, 3) ' create placeholder for the file attributes
+
+
+Dim file As Object
+Dim j As Integer
+j = 0
+For Each file In fld.Files
+    dlglistsub.lstitems.AddItem (file.Name)
+    mdlpublic.file_attrib(j, 0) = file.Name
+    mdlpublic.file_attrib(j, 1) = file.Attributes
+    mdlpublic.file_attrib(j, 2) = file.Size
+    mdlpublic.file_attrib(j, 3) = "File"
+    j = j + 1
 Next
 
 Exit Sub
@@ -192,7 +226,15 @@ errpage:
 End Sub
 
 
+Private Sub Form_Click()
+'Temporary only
+'Debug.Print getAttribValue(17)
+End Sub
+
 Private Sub Form_Load()
+
+lblVersion.Caption = "v. " & App.Major & "." & App.Minor & "." & App.Revision
+
 cmbattr.Text = "Default"
 cmdunhide.Enabled = False
 
@@ -206,10 +248,12 @@ Private Sub Form_Unload(Cancel As Integer)
 End
 End Sub
 
+
+
 Private Sub tmanim_Timer()
 
 Form1.Visible = True
-tmanim.Interval = 40
+tmanim.Interval = 100
 
 mdlpublic.ysize = mdlpublic.ysize + 300
 Form1.Height = mdlpublic.ysize
@@ -218,7 +262,7 @@ mdlpublic.ypos = mdlpublic.ypos + 200
 Form1.Top = mdlpublic.ypos
 
 
-If Form1.Height >= 2385 Or Form1.Top >= 3000 Then
+If Form1.Height >= 2565 Or Form1.Top >= 3000 Then
     tmanim.Enabled = False
 End If
 
