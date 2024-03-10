@@ -2,7 +2,7 @@ VERSION 5.00
 Begin VB.Form dlglistsub 
    BorderStyle     =   3  'Fixed Dialog
    Caption         =   "Files and Folders"
-   ClientHeight    =   2265
+   ClientHeight    =   3465
    ClientLeft      =   8040
    ClientTop       =   5805
    ClientWidth     =   5775
@@ -10,12 +10,12 @@ Begin VB.Form dlglistsub
    LinkTopic       =   "Form1"
    MaxButton       =   0   'False
    MinButton       =   0   'False
-   ScaleHeight     =   2265
+   ScaleHeight     =   3465
    ScaleWidth      =   5775
    ShowInTaskbar   =   0   'False
    Begin VB.Frame frameProperties 
       Caption         =   "Properties"
-      Height          =   1935
+      Height          =   3135
       Left            =   3360
       TabIndex        =   2
       Top             =   120
@@ -23,7 +23,7 @@ Begin VB.Form dlglistsub
       Begin VB.TextBox txtProperties 
          BackColor       =   &H8000000F&
          BorderStyle     =   0  'None
-         Height          =   1335
+         Height          =   2655
          Left            =   120
          Locked          =   -1  'True
          MultiLine       =   -1  'True
@@ -34,10 +34,10 @@ Begin VB.Form dlglistsub
       End
    End
    Begin VB.ListBox lstitems 
-      Height          =   1230
-      Left            =   360
+      Height          =   2205
+      Left            =   240
       TabIndex        =   1
-      Top             =   360
+      Top             =   240
       Width           =   3015
    End
    Begin VB.CommandButton OKButton 
@@ -45,7 +45,7 @@ Begin VB.Form dlglistsub
       Height          =   495
       Left            =   240
       TabIndex        =   0
-      Top             =   1560
+      Top             =   2760
       Width           =   3015
    End
 End
