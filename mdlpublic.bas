@@ -123,3 +123,26 @@ getAttribText = attribvalue
 
 End Function
 
+Public Function extractRegex(text As String, pat As String)
+Set re = New RegExp
+With re
+    .pattern = pat
+    .IgnoreCase = False
+    .Global = True
+End With
+
+
+
+
+'Dim match
+
+'For Each match In matches
+'Debug.Print match.Value
+'Next match
+If re.Test(text) Then
+Set matches = re.Execute(text)
+extractRegex = matches(0)
+Else
+extractRegex = ""
+End If
+End Function

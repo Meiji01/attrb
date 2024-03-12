@@ -149,7 +149,7 @@ Dim fdname As String
 'fdname = txtfoldername.Text
 'apdir = App.Path & "\" & fdname
 apdir = mdlpublic.curdir
-fdname = apdir & "\" & txtfoldername.Text
+fdname = apdir & "\" & txtfoldername.text
 
 
 
@@ -159,17 +159,17 @@ Debug.Print fdname
 On Error GoTo errpage
 
 'set folder attribute
-If cmbattr.Text = "Archive" Then
+If cmbattr.text = "Archive" Then
     SetAttr fdname, vbArchive
-ElseIf cmbattr.Text = "Hidden" Then
+ElseIf cmbattr.text = "Hidden" Then
     SetAttr fdname, vbHidden
-ElseIf cmbattr.Text = "System" Then
+ElseIf cmbattr.text = "System" Then
     SetAttr fdname, vbSystem
-ElseIf cmbattr.Text = "System(ReadOnly)" Then
+ElseIf cmbattr.text = "System(ReadOnly)" Then
     SetAttr fdname, vbReadOnly
-ElseIf cmbattr.Text = "Default" Then
+ElseIf cmbattr.text = "Default" Then
     SetAttr fdname, vbNormal
-ElseIf cmbattr.Text = "System,Hidden" Then
+ElseIf cmbattr.text = "System,Hidden" Then
     SetAttr fdname, vbSystem + vbHidden
 Else
     Err.Description = "Invalid Operation!"
@@ -192,7 +192,7 @@ lblVersion.Caption = "v. " & App.Major & "." & App.Minor & "." & App.Revision
 mdlpublic.curdir = App.Path
 Form1.lblcurdir = mdlpublic.curdir
 
-cmbattr.Text = "Default"
+cmbattr.text = "Default"
 cmdunhide.Enabled = False
 
 'initialize variables
@@ -237,7 +237,7 @@ End If
 End Sub
 
 Private Sub txtfoldername_Change()
-If txtfoldername.Text = "" Then
+If txtfoldername.text = "" Then
     cmdunhide.Enabled = False
     Else
     cmdunhide.Enabled = True
@@ -277,6 +277,9 @@ Debug.Print App.Path
 
 dlglistsub.lstitems.Clear
 Erase mdlpublic.f_attrib
+
+'update directory label in form1
+Form1.lblcurdir = mdlpublic.curdir
 
 'Create array to hold the attributes
 

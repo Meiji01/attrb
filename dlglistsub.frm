@@ -13,6 +13,13 @@ Begin VB.Form dlglistsub
    ScaleHeight     =   3465
    ScaleWidth      =   5775
    ShowInTaskbar   =   0   'False
+   Begin VB.DriveListBox drvbox 
+      Height          =   315
+      Left            =   240
+      TabIndex        =   5
+      Top             =   240
+      Width           =   3015
+   End
    Begin VB.CommandButton cmdRefresh 
       Caption         =   "Refresh"
       Height          =   375
@@ -42,10 +49,10 @@ Begin VB.Form dlglistsub
       End
    End
    Begin VB.ListBox lstitems 
-      Height          =   2205
+      Height          =   1815
       Left            =   240
       TabIndex        =   1
-      Top             =   240
+      Top             =   600
       Width           =   3015
    End
    Begin VB.CommandButton OKButton 
@@ -82,8 +89,30 @@ Private Sub cmdRefresh_Click()
 Form1.printFolderList
 End Sub
 
+Private Sub drvbox_Change()
+
+Dim newdrive As String
+
+newdrive = drvbox.Drive
+
+
+If InStr(newdrive, "[\\") = 0 Then
+    mdlpublic.curdir = newdrive & "\"
+    Else
+    'get in between []
+    Dim strdrive As String
+    strdrive = mdlpublic.extractRegex(newdrive, "\\.+")
+    strdrive = Left(strdrive, Len(strdrive) - 1)
+    mdlpublic.curdir = strdrive
+End If
+
+Debug.Print "Init Drive:" & mdlpublic.curdir
+'Print drvbox.Drive
+End Sub
+
 Private Sub Form_Click()
 'dirGoBack (mdlpublic.curdir)
+'Debug.Print mdlpublic.extractRegex("test123", "\d+")
 End Sub
 
 Private Sub Form_Deactivate()
@@ -93,15 +122,15 @@ End Sub
 Private Sub lstitems_Click()
 'txtProperties.Text = txtProperties.Text & "Attribute:" & "Test"
 'Debug.Print UBound(mdlpublic.f_attrib)
-txtProperties.Text = ""
+txtProperties.text = ""
 If lstitems.ListIndex > 0 Then
-    Debug.Print "Selected Item is"; lstitems.Text
-    findfolder lstitems.Text, mdlpublic.f_attrib
-    findfolder lstitems.Text, mdlpublic.file_attrib
-    Form1.txtfoldername.Text = lstitems.Text
+    Debug.Print "Selected Item is"; lstitems.text
+    findfolder lstitems.text, mdlpublic.f_attrib
+    findfolder lstitems.text, mdlpublic.file_attrib
+    Form1.txtfoldername.text = lstitems.text
 Else
-    txtProperties.Text = "<Goto Previous Folder>"
-    Form1.txtfoldername.Text = ""
+    txtProperties.text = "<Goto Previous Folder>"
+    Form1.txtfoldername.text = ""
 End If
 End Sub
 
@@ -110,7 +139,7 @@ If lstitems.ListIndex = 0 Then
     dirGoBack (mdlpublic.curdir)
     Form1.printFolderList
 Else
-    dirGoUp (lstitems.Text)
+    dirGoUp (lstitems.text)
     Form1.printFolderList
 End If
 
@@ -129,11 +158,11 @@ For X = 0 To UBound(attribs)
     Debug.Print "findfolder:" & foldername
     If attribs(X, 0) = foldername Then
         'Print ("Attribute:" & attribs(x, 1))
-        txtProperties.Text = txtProperties.Text & "Name: " & attribs(X, 0) & vbCrLf
-        txtProperties.Text = txtProperties.Text & "Type: " & attribs(X, 3) & vbCrLf
+        txtProperties.text = txtProperties.text & "Name: " & attribs(X, 0) & vbCrLf
+        txtProperties.text = txtProperties.text & "Type: " & attribs(X, 3) & vbCrLf
         'txtProperties.Text = txtProperties.Text & "Attribute: " & attribs(x, 1) & vbCrLf
-        txtProperties.Text = txtProperties.Text & "Attribute: " & mdlpublic.getAttribValue(Val(attribs(X, 1))) & vbCrLf
-        txtProperties.Text = txtProperties.Text & "Size: " & attribs(X, 2) & " bytes" & vbCrLf
+        txtProperties.text = txtProperties.text & "Attribute: " & mdlpublic.getAttribValue(Val(attribs(X, 1))) & vbCrLf
+        txtProperties.text = txtProperties.text & "Size: " & attribs(X, 2) & " bytes" & vbCrLf
     End If
 Next X
 
@@ -156,7 +185,7 @@ newdir = Left(curdir, lastdirtextposition)
 Debug.Print ("CurrentDir:" & dir)
 Debug.Print ("NewDir:" & newdir)
 
-If Len(newdir) < 3 Then ' handles if the currentdir is on root directory
+If Len(newdir) < 3 And Right(newdir, 1) <> "\" Then ' handles if the currentdir is on root directory
     newdir = newdir & "\"
 End If
 dirTrimDown = newdir
@@ -166,7 +195,7 @@ Private Sub dirGoBack(dir As String)
 Dim newdir As String
 If Len(mdlpublic.curdir) > 3 Then
     newdir = dirTrimDown(dir)
-    Form1.lblcurdir = newdir
+    'Form1.lblcurdir = newdir
     mdlpublic.curdir = newdir
 End If
 End Sub
