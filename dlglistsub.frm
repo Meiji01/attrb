@@ -106,6 +106,7 @@ If InStr(newdrive, "[\\") = 0 Then
     mdlpublic.curdir = strdrive
 End If
 
+Call cmdRefresh_Click
 Debug.Print "Init Drive:" & mdlpublic.curdir
 'Print drvbox.Drive
 End Sub

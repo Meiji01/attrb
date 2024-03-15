@@ -300,6 +300,7 @@ mdlpublic.f_attrib(0, 3) = "Marker"
 
 
 For Each subfoldr In fld.SubFolders
+'DoEvents
     Debug.Print ("Redim Array" & i + 1)
     Debug.Print "Array:" & i + 1 & "," & 1 & "=" & subfoldr.Name
     
@@ -325,6 +326,7 @@ Dim file As Object
 Dim j As Integer
 j = 0
 For Each file In fld.Files
+'DoEvents
     dlglistsub.lstitems.AddItem (file.Name)
     mdlpublic.file_attrib(j, 0) = file.Name
     mdlpublic.file_attrib(j, 1) = file.Attributes
