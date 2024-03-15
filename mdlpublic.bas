@@ -14,6 +14,7 @@ Attribute VB_Name = "mdlpublic"
 
 Public ysize As Integer
 Public ypos As Integer
+Public curdir As String
 
 
 '0= folder name
@@ -43,7 +44,7 @@ End Function
 
 Public Function getAttribValue(attrib As Integer) As String
 
-Dim x As Integer
+Dim X As Integer
 Dim bit As Integer
 Dim attribstring As String
 'Dim currbit As Integer
@@ -55,8 +56,8 @@ modulus = 0
 If attrib > 0 Then
 
 Do
-    For x = 0 To 5
-        bit = 2 ^ x
+    For X = 0 To 5
+        bit = 2 ^ X
         If bit = 0 Then
             quotient = 1
         Else
@@ -74,7 +75,7 @@ Do
             Exit For
         End If
 
-    Next x
+    Next X
     
     'subtract attrib in remainder
     attrib = attrib - bit
@@ -122,3 +123,26 @@ getAttribText = attribvalue
 
 End Function
 
+Public Function extractRegex(text As String, pat As String)
+Set re = New RegExp
+With re
+    .pattern = pat
+    .IgnoreCase = False
+    .Global = True
+End With
+
+
+
+
+'Dim match
+
+'For Each match In matches
+'Debug.Print match.Value
+'Next match
+If re.Test(text) Then
+Set matches = re.Execute(text)
+extractRegex = matches(0)
+Else
+extractRegex = ""
+End If
+End Function
