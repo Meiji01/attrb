@@ -140,8 +140,17 @@ If lstitems.ListIndex = 0 Then
     dirGoBack (mdlpublic.curdir)
     Form1.printFolderList
 Else
-    dirGoUp (lstitems.text)
-    Form1.printFolderList
+    On Error GoTo skipcheck
+    If mdlpublic.f_attrib(lstitems.ListIndex, 3) = "Folder" Then
+        dirGoUp (lstitems.text)
+        Form1.printFolderList
+     End If
+
+
+skipcheck:
+Debug.Print "Not a folder"
+Exit Sub
+    'Do nothing
 End If
 
 End Sub
