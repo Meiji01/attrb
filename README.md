@@ -13,6 +13,10 @@ Attrb features the following functionalities
 # System Requirements
 - Windows XP and above
 - Not tested in Linux Wine System
+- ReactOS compatible
 
 # Future
 - Additional features will be added soon
+
+# Issues
+- For any issues, please log a defect on the latest branch
