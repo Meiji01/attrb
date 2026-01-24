@@ -184,12 +184,14 @@ End Sub
 Private Sub Form_Click()
 'Temporary only
 'Debug.Print getAttribValue(17)
+'ChDir "C:\Users\MeijSandbox\Desktop"
 End Sub
 
 Private Sub Form_Load()
 
 lblVersion.Caption = "v. " & App.Major & "." & App.Minor & "." & App.Revision
-mdlpublic.curdir = App.Path
+'mdlpublic.curdir = App.Path
+mdlpublic.curdir = "C:\Users\MeijSandbox\Desktop"
 Form1.lblcurdir = mdlpublic.curdir
 
 cmbattr.text = "Default"

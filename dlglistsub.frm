@@ -93,12 +93,16 @@ Private Sub drvbox_Change()
 
 Dim newdrive As String
 
+
 newdrive = drvbox.Drive
+Debug.Print "New DRIVE:" & newdrive
 
 
 If InStr(newdrive, "[\\") = 0 Then
+    'get drive only
+    newdrive = Left(newdrive, 2)
     mdlpublic.curdir = newdrive & "\"
-    Else
+Else
     'get in between []
     Dim strdrive As String
     strdrive = mdlpublic.extractRegex(newdrive, "\\.+")
