@@ -190,8 +190,8 @@ End Sub
 Private Sub Form_Load()
 
 lblVersion.Caption = "v. " & App.Major & "." & App.Minor & "." & App.Revision
-'mdlpublic.curdir = App.Path
-mdlpublic.curdir = "C:\Users\MeijSandbox\Desktop"
+mdlpublic.curdir = App.Path
+'mdlpublic.curdir = "C:\Users\MeijSandbox\Desktop"
 Form1.lblcurdir = mdlpublic.curdir
 
 cmbattr.text = "Default"
