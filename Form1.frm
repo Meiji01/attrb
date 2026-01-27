@@ -138,7 +138,7 @@ End If
 
 Exit Sub
 errpage:
-MsgBox Err.Description, vbCritical, "Error!"
+MsgBox err.Description, vbCritical, "Error!"
 'MsgBox App.Path
 
 End Sub
@@ -172,12 +172,12 @@ ElseIf cmbattr.text = "Default" Then
 ElseIf cmbattr.text = "System,Hidden" Then
     SetAttr fdname, vbSystem + vbHidden
 Else
-    Err.Description = "Invalid Operation!"
+    err.Description = "Invalid Operation!"
     GoTo errpage
     End If
     Exit Sub
 errpage:
-    MsgBox Err.Description, vbCritical, "ERROR!"
+    MsgBox err.Description, vbCritical, "ERROR!"
 End Sub
 
 
@@ -267,6 +267,7 @@ End Sub
 Public Sub printFolderList() ' this method to print value to listbox in dlglistsub
 
 On Error GoTo ErrTab
+'On Error Resume Next
 
 Dim fso As New FileSystemObject
 Dim fld As Folder
@@ -302,12 +303,14 @@ mdlpublic.f_attrib(0, 3) = "Marker"
 
 
 For Each subfoldr In fld.SubFolders
-'DoEvents
+
+    On Error Resume Next
     Debug.Print ("Redim Array" & i + 1)
     Debug.Print "Array:" & i + 1 & "," & 1 & "=" & subfoldr.Name
     
-    dlglistsub.lstitems.AddItem (subfoldr.Name) 'Add folder name in the listbox
     
+    dlglistsub.lstitems.AddItem (subfoldr.Name) 'Add folder name in the listbox
+    DoEvents
     
     '0= folder name
     '1=Attribute
@@ -328,8 +331,10 @@ Dim file As Object
 Dim j As Integer
 j = 0
 For Each file In fld.Files
-'DoEvents
+On Error Resume Next
+
     dlglistsub.lstitems.AddItem (file.Name)
+    DoEvents
     mdlpublic.file_attrib(j, 0) = file.Name
     mdlpublic.file_attrib(j, 1) = file.Attributes
     mdlpublic.file_attrib(j, 2) = file.Size
@@ -338,6 +343,6 @@ For Each file In fld.Files
 Next
 Exit Sub
 ErrTab:
-MsgBox Err.Description
+MsgBox err.Description
 End Sub
 
